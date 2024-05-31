@@ -16,6 +16,8 @@ POSTGRES_PASSWORD: postgres
 ## Atividades:
  - [x] Criar HelloWorld
  - [x] Conectar no postgres
+ - [ ] Configurar gerenciador de variaveis
+ - [ ] Configurar migrations
 
 ## Tutoriais
 
