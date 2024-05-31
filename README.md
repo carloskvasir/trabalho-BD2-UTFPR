@@ -1,8 +1,16 @@
 # TRABALHO DE BANCO DE DADOS
 
+As credenciais por padrão são:
+```bash
+POSTGRES_DB: trabalho_banco
+POSTGRES_USER: postgres
+POSTGRES_PASSWORD: postgres
+```
+
 ## Nesse projeto utlizamos essas ferramentas
  - java openjdk-17
  - maven 3.9.7
+ - postgresql 16
 
 
 ## Atividades:
