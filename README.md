@@ -1,10 +1,15 @@
 # TRABALHO DE BANCO DE DADOS
 
-Atividades:
+## Nesse projeto utlizamos essas ferramentas
+ - java openjdk-17
+ - maven 3.9.7
+
+
+## Atividades:
  - [x] Criar HelloWorld
  - [x] Conectar no postgres
 
-Tutoriais
+## Tutoriais
 
 Para rodar o banco pelo dockercompose
 ```bash
