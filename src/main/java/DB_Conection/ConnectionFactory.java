@@ -11,10 +11,8 @@ public class ConnectionFactory {
     }
 
     //TODO criar getConnection com parametros de usuário e senha
-    public static Connection getConnection() throws SQLException {
-        String url = "jdbc:postgresql://localhost:5432/trabalho_banco_2";
-        String user = "postgres";
-        String password = "postgres";
+    public static Connection getConnection(String user, String password) throws SQLException {
+        String url = "jdbc:postgresql://localhost:5432/trabalho_banco";
 
         return DriverManager.getConnection(url, user, password);
     }
