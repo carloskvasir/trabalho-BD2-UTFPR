@@ -1,3 +1,9 @@
+CREATE TABLE product_groups (
+                                id INT PRIMARY KEY,
+                                name VARCHAR(30) NOT NULL,
+                                description VARCHAR(255)
+);
+
 create table tb_fornecedores(
                                 for_codigo BIGINT PRIMARY KEY,
                                 for_descricao VARCHAR(45)
@@ -8,7 +14,11 @@ CREATE TABLE tb_produtos(
                             pro_descricao VARCHAR(255),
                             pro_valor DECIMAL NOT NULL,
                             pro_quantidade INT NOT NULL,
+                            product_group INT NOT NULL,
                             tb_fornecedores_for_codigo BIGINT NOT NULL,
+                            CONSTRAINT fk_product_group
+                                FOREIGN KEY (product_group)
+                                    REFERENCES product_groups(id),
                             CONSTRAINT fk_fornecedores
                                 FOREIGN KEY (tb_fornecedores_for_codigo)
                                     REFERENCES tb_fornecedores(for_codigo)
