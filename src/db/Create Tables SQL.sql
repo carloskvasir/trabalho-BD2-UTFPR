@@ -23,7 +23,7 @@ CREATE TABLE tb_funcionarios (
 );
 
 CREATE TABLE tb_vendas (
-                           ven_codigo BIGINT PRIMARY KEY,
+                           ven_codigo BIGSERIAL PRIMARY KEY,
                            ven_horario TIMESTAMP NOT NULL,
                            ven_valor_total DECIMAL(7,2) NOT NULL,
                            tb_funcionario_fun_codigo BIGINT NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE tb_vendas (
 );
 
 CREATE TABLE tb_itens (
-                          ite_codigo BIGINT PRIMARY KEY,
+                          ite_codigo BIGSERIAL PRIMARY KEY,
                           ite_quantidade INT NOT NULL,
                           ite_valor_parcial DECIMAL,
                           tb_produtos_pro_codigo BIGINT,
