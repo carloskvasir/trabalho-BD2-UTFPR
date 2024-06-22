@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-import service.ItemVendaService;
 import service.ProdutoService;
 import service.VendaService;
 
@@ -102,14 +101,7 @@ public class VendaScreen {
                 .valorTotal(valorTotal)
                 .build();
 
-//        Long idVenda = VendaService.insert(venda);
-
-//        for (ItemVenda item : listItem) {
-//            item.setVendaCodigo(idVenda); // Atualiza o ID da venda em cada item
-//        }
         VendaService.inserirVendaComItens(venda, listItem);
-
-//        ItemVendaService.insert(listItem);
 
         produtosListCesta.clear();
         cestaVisualizacao.clear();

@@ -13,6 +13,7 @@ public class Funcionario {
     private String cpf;
     private String senha;
     private String funcao;
+    private String user;
 
     @Override
     public String toString() {

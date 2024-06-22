@@ -43,32 +43,51 @@ public class VendaDAO {
 
     public void inserirVendaComItens(Venda venda, List<ItemVenda> itens) {
         String sql = "SELECT inserir_venda_com_itens(?, ?, ?, ?)";
+        Connection conn = null;
 
-        try (Connection conn = ConnectionFactory.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try {
+            // Estabelecer a conexão e iniciar a transação
+            conn = ConnectionFactory.getConnection();
+            conn.setAutoCommit(false);
 
-            // Preparar os parâmetros
-            stmt.setTimestamp(1, Timestamp.valueOf(venda.getHorario().atStartOfDay()));
-            stmt.setBigDecimal(2, BigDecimal.valueOf(venda.getValorTotal()));
-            stmt.setLong(3, venda.getFuncionarioCodigo());
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                // Preparar os parâmetros
+                stmt.setTimestamp(1, Timestamp.valueOf(venda.getHorario().atStartOfDay()));
+                stmt.setBigDecimal(2, BigDecimal.valueOf(venda.getValorTotal()));
+                stmt.setLong(3, venda.getFuncionarioCodigo());
 
-            // Converter itens para JSON
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-            String jsonItens = objectMapper.writeValueAsString(itens);
-            stmt.setObject(4, jsonItens, java.sql.Types.OTHER);
+                // Converter itens para JSON
+                ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+                String jsonItens = objectMapper.writeValueAsString(itens);
+                stmt.setObject(4, jsonItens, java.sql.Types.OTHER);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next() && rs.getLong(1) != 0) {
-                    System.out.println("Venda e itens inseridos com sucesso.");
-                } else {
-                    System.out.println("Falha ao inserir venda e itens.");
-                }
             }
 
+            // Commit se tudo ocorreu bem
+            conn.commit();
+
         } catch (SQLException | JsonProcessingException e) {
+            if (conn != null) {
+                try {
+                    // Rollback em caso de erro
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
     }
+
 
 }

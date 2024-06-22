@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class FuncionarioDAO {
 
     public static Funcionario getFuncionarioByNameAndPassword() {
-        String query = "SELECT * FROM tb_funcionarios WHERE fun_nome LIKE ? AND fun_senha LIKE ?";
+        String query = "SELECT * FROM tb_funcionarios WHERE fun_user LIKE ? AND fun_senha LIKE ?";
         Funcionario funcionario = null;
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -27,7 +27,9 @@ public class FuncionarioDAO {
                         .nome(rs.getString("fun_nome"))
                         .cpf(rs.getString("fun_cpf"))
                         .senha(rs.getString("fun_senha"))
-                        .funcao(rs.getString("fun_funcao")).build();
+                        .funcao(rs.getString("fun_funcao"))
+                        .user(rs.getString("fun_user"))
+                        .build();
             }
         } catch (SQLException e) {
             e.printStackTrace();

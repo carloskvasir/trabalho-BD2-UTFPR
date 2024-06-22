@@ -41,7 +41,7 @@ public class LoginController {
             storeCurrentUser(username, password);
             Funcionario funcionario = FuncionarioDAO.getFuncionarioByNameAndPassword();
             if (funcionario != null) {
-                if (!funcionario.getNome().equals(username) && !funcionario.getSenha().equals(password)) {
+                if (!funcionario.getUser().equals(username) && !funcionario.getSenha().equals(password)) {
                     displayError("Usuario não existe na tabela de funcionarios");
                 }
             }
