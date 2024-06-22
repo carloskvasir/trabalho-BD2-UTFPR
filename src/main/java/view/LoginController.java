@@ -1,12 +1,14 @@
-package viewClass;
+package view;
 
 import DB_Conection.ConnectionFactory;
 import DB_Conection.CurrentUser;
+import domain.Produto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import repository.ProdutoDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -27,13 +29,17 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
         tryLogin(username, password, event);
+
+        ProdutoDAO p = new ProdutoDAO();
+        System.out.println(p.getAllProdutos());
+
     }
 
     private void tryLogin(String username, String password, ActionEvent event) {
         try {
             storeCurrentUser(username, password);
             ConnectionFactory.getConnection();
-            NavigationUtil.navigateToScreen(event, "mainScreen.fxml");
+            NavigationUtil.navigateToScreen(event, "vendaScreen.fxml");
         } catch (SQLException | IOException e) {
             displayError("Erro ao conectar no banco", e);
         }

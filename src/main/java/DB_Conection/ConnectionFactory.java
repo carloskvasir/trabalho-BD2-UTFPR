@@ -7,13 +7,12 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 
-    public ConnectionFactory() {
-    }
+    private static final String URL = "jdbc:postgresql://localhost:5432/trabalho_banco";
 
-    //TODO criar getConnection com parametros de usuário e senha
-    public static Connection getConnection(String user, String password) throws SQLException {
-        String url = "jdbc:postgresql://localhost:5432/trabalho_banco";
-
-        return DriverManager.getConnection(url, user, password);
+    public static Connection getConnection() throws SQLException {
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String user = currentUser.getUsername();
+        String password = currentUser.getPassword();
+        return DriverManager.getConnection(URL, user, password);
     }
 }
