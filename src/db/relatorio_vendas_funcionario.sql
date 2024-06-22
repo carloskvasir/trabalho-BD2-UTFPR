@@ -1,3 +1,7 @@
+DROP FUNCTION IF EXISTS relatorio_vendas_funcionario(BIGINT, DATE, DATE);
+
+-- gera um relatório de vendas para um funcionário específico dentro de um período de tempo definido
+
 CREATE OR REPLACE FUNCTION relatorio_vendas_funcionario(
     p_fun_codigo BIGINT,     -- Código do funcionário
     p_data_inicio DATE,      -- Data de início do período
@@ -23,16 +27,16 @@ FROM
 WHERE
     f.fun_codigo = p_fun_codigo
   AND v.ven_horario BETWEEN p_data_inicio::timestamp
-  AND (p_data_fim::timestamp + INTERVAL '1 day' - INTERVAL '1 second')
+  AND (p_data_fim::timestamp)
 GROUP BY
     f.fun_codigo;
 END;
 $$ LANGUAGE plpgsql;
 
-----
+---- exemplo de execução
 SELECT * FROM relatorio_vendas_funcionario(
 1,                             -- Código do funcionário
 '2024-06-21',                  -- Data de início
-'2024-06-22'                   -- Data de fim
+'2026-06-22'                   -- Data de fim
 );
 ----

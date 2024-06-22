@@ -26,7 +26,8 @@ CREATE TABLE tb_produtos(
 
 CREATE TABLE tb_funcionarios (
                                  fun_codigo BIGINT PRIMARY KEY,
-                                 fun_nome VARCHAR(65) NOT NULL ,
+                                 fun_user VARCHAR(65) NOT NULL,
+                                 fun_nome VARCHAR(65) NOT NULL,
                                  fun_cpf VARCHAR(11) NOT NULL,
                                  fun_senha VARCHAR(50) NOT NULL,
                                  fun_funcao VARCHAR(50) NOT NULL
@@ -55,5 +56,3 @@ CREATE TABLE tb_itens (
                               FOREIGN KEY (tb_venda_ven_codigo)
                                   REFERENCES tb_vendas(ven_codigo)
 );
-
-

@@ -21,6 +21,7 @@ INSERT INTO product_groups (id, name, description) VALUES
    (20, 'Eletrodomésticos', 'Eletrodomésticos para casa');
 
 ----
+
 INSERT INTO tb_fornecedores (for_codigo, for_descricao) VALUES
     (1, 'Fornecedor A'),
     (2, 'Fornecedor B'),
@@ -69,36 +70,38 @@ INSERT INTO tb_produtos (pro_codigo, pro_descricao, pro_valor, pro_quantidade, p
 
 ----
 
-INSERT INTO tb_funcionarios (fun_codigo, fun_nome, fun_cpf, fun_senha, fun_funcao) VALUES
-   (1, 'João Silva', '12345678901', 'senha123', 'Vendedor'),
-   (2, 'Maria Oliveira', '12345678902', 'senha456', 'Gerente'),
-   (3, 'Pedro Almeida', '12345678903', 'senha789', 'Caixa'),
-   (4, 'Ana Souza', '12345678904', 'senha012', 'Vendedor'),
-   (5, 'Carlos Pereira', '12345678905', 'senha345', 'Estoquista'),
-   (6, 'Beatriz Gomes', '12345678906', 'senha678', 'Vendedor'),
-   (7, 'Rafael Santos', '12345678907', 'senha901', 'Gerente'),
-   (8, 'Fernanda Lima', '12345678908', 'senha234', 'Caixa'),
-   (9, 'Lucas Costa', '12345678909', 'senha567', 'Vendedor'),
-   (10, 'Juliana Torres', '12345678910', 'senha890', 'Vendedor'),
-   (11, 'Gabriel Rocha', '12345678911', 'senha111', 'Estoquista'),
-   (12, 'Letícia Carvalho', '12345678912', 'senha222', 'Vendedor'),
-   (13, 'Rodrigo Martins', '12345678913', 'senha333', 'Caixa'),
-   (14, 'Larissa Freitas', '12345678914', 'senha444', 'Vendedor'),
-   (15, 'Vinícius Barros', '12345678915', 'senha555', 'Gerente'),
-   (16, 'Natália Ribeiro', '12345678916', 'senha666', 'Vendedor'),
-   (17, 'Thiago Fernandes', '12345678917', 'senha777', 'Caixa'),
-   (18, 'Daniela Mota', '12345678918', 'senha888', 'Estoquista'),
-   (19, 'Felipe Costa', '12345678919', 'senha999', 'Vendedor'),
-   (20, 'Isabela Melo', '12345678920', 'senha000', 'Gerente');
+INSERT INTO tb_funcionarios (fun_codigo, fun_user, fun_nome, fun_cpf, fun_senha, fun_funcao) VALUES
+    (1, 'postgres', 'João Silva', '12345678901', 'postgres', 'Master'),
+    (2, '1', 'Maria Oliveira', '12345678902', '1', 'Master'),
+    (3, 'p.almeida', 'Pedro Almeida', '12345678903', 'senha789', 'Caixa'),
+    (4, 'a.souza', 'Ana Souza', '12345678904', 'senha012', 'Vendedor'),
+    (5, 'c.pereira', 'Carlos Pereira', '12345678905', 'senha345', 'Estoquista'),
+    (6, 'b.gomes', 'Beatriz Gomes', '12345678906', 'senha678', 'Vendedor'),
+    (7, 'r.santos', 'Rafael Santos', '12345678907', 'senha901', 'Gerente'),
+    (8, 'f.lima', 'Fernanda Lima', '12345678908', 'senha234', 'Caixa'),
+    (9, 'l.costa', 'Lucas Costa', '12345678909', 'senha567', 'Vendedor'),
+    (10, 'j.torres', 'Juliana Torres', '12345678910', 'senha890', 'Vendedor'),
+    (11, 'g.rocha', 'Gabriel Rocha', '12345678911', 'senha111', 'Estoquista'),
+    (12, 'l.carvalho', 'Letícia Carvalho', '12345678912', 'senha222', 'Vendedor'),
+    (13, 'r.martins', 'Rodrigo Martins', '12345678913', 'senha333', 'Caixa'),
+    (14, 'l.freitas', 'Larissa Freitas', '12345678914', 'senha444', 'Vendedor'),
+    (15, 'v.barros', 'Vinícius Barros', '12345678915', 'senha555', 'Gerente'),
+    (16, 'n.ribeiro', 'Natália Ribeiro', '12345678916', 'senha666', 'Vendedor'),
+    (17, 't.fernandes', 'Thiago Fernandes', '12345678917', 'senha777', 'Caixa'),
+    (18, 'd.mota', 'Daniela Mota', '12345678918', 'senha888', 'Estoquista'),
+    (19, 'f.costa', 'Felipe Costa', '12345678919', 'senha999', 'Vendedor'),
+    (20, 'i.melo', 'Isabela Melo', '12345678920', 'senha000', 'Gerente');
+
 
 ----
+
 INSERT INTO tb_vendas (ven_codigo, ven_horario, ven_valor_total, tb_funcionario_fun_codigo) VALUES
     (1, '2024-06-21 10:00:00', 1199.96, 1),
-    (2, '2024-06-21 10:10:00', 249.95, 2),
-    (3, '2024-06-21 10:20:00', 439.96, 3),
-    (4, '2024-06-21 10:30:00', 199.90, 4),
+    (2, '2024-06-21 10:10:00', 249.95, 1),
+    (3, '2024-06-21 10:20:00', 439.96, 1),
+    (4, '2024-06-21 10:30:00', 199.90, 1),
     (5, '2024-06-21 10:40:00', 179.91, 5),
-    (6, '2024-06-21 10:50:00', 299.98, 6),
+    (6, '2024-06-21 10:50:00', 299.98, 1),
     (7, '2024-06-21 11:00:00', 299.97, 7),
     (8, '2024-06-21 11:10:00', 129.94, 8),
     (9, '2024-06-21 11:20:00', 169.96, 9),
@@ -140,3 +143,4 @@ INSERT INTO tb_itens (ite_codigo, ite_quantidade, ite_valor_parcial, tb_produtos
 
 ----
 
+select * from tb_itens;
