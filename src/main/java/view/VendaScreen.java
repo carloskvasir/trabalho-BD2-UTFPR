@@ -7,14 +7,9 @@ import domain.Venda;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-import repository.FuncionarioDAO;
 import repository.ItemVendaDAO;
 import repository.VendaDAO;
 import service.ProdutoService;
@@ -32,21 +27,22 @@ public class VendaScreen {
     @FXML
     private ScrollPane resultadoVenda;
     @FXML
-    private ListView<Produto> list_prod; // Exibir Produto diretamente
+    private ListView<Produto> list_prod;
     @FXML
     private Button add_prod;
     @FXML
     private ScrollPane resultadoVenda1;
     @FXML
-    private ListView<String> cesta; // Exibir descrição simples
+    private ListView<String> cesta;
+    @FXML
+    private Spinner<Integer> quantidade_produto;
 
     private ObservableList<Produto> produtosEncontrados;
-    private ObservableList<String> cestaVisualizacao; // Para exibição produtos cesta
-    private List<Produto> produtosListCesta; // Lista de produtos adicionados ao carrinho
+    private ObservableList<String> cestaVisualizacao;
+    private List<Produto> produtosListCesta;
     private ProdutoService produtoService;
-    private List<Produto> produtosList;
     private double valorTotal;
-    List<ItemVenda> listItem = new ArrayList<>();
+    private List<ItemVenda> listItem = new ArrayList<>();
 
     @FXML
     private void onBuscarProdutoClicked(MouseEvent event) {
@@ -61,12 +57,14 @@ public class VendaScreen {
 
     private void buscarProduto(String nomeProduto) {
         produtosEncontrados.clear();
-        produtosList = produtoService.findByName(nomeProduto);
+        List<Produto> produtosList = produtoService.findByName(nomeProduto);
 
-        adicionaProdutoEncontrado(nomeProduto);
+        if (produtosList != null && !produtosList.isEmpty()) {
+            produtosEncontrados.addAll(produtosList);
+        } else {
+            System.out.println("Nenhum produto encontrado com o nome: " + nomeProduto);
+        }
     }
-
-
 
     @FXML
     private void onAdicionarProdutoClicked(MouseEvent event) {
@@ -76,15 +74,24 @@ public class VendaScreen {
             return;
         }
 
-        int quantidade = 1;
-        valorTotal = quantidade * produtoSelecionado.getValor();
+        int quantidade = quantidade_produto.getValue();
+        if (quantidade > produtoSelecionado.getQuantidade()) {
+            System.out.println("Quantidade solicitada excede o estoque disponível.");
+            return;
+        }
+
+        double valorParcial = quantidade * produtoSelecionado.getValor();
+        valorTotal += valorParcial; // Acumula o valor total
 
         produtosListCesta.add(produtoSelecionado);
-        addVisualizacaoProdutosNaCesta(produtoSelecionado, quantidade, valorTotal);
-    }
+        listItem.add(ItemVenda.builder()
+                .produtoCodigo(produtoSelecionado.getCodigo())
+                .vendaCodigo(0L) // Será atualizado após a inserção da venda
+                .quantidade(quantidade)
+                .valor(valorParcial)
+                .build());
 
-    private void addVisualizacaoProdutosNaCesta(Produto produtoSelecionado, int quantidade, double valorTotal) {
-        cestaVisualizacao.add(produtoSelecionado.getDescricao() + " - Quantidade: " + quantidade + " - Valor: " + valorTotal);
+        cestaVisualizacao.add(produtoSelecionado.getDescricao() + " - Quantidade: " + quantidade + " - Valor: " + valorParcial);
     }
 
     @FXML
@@ -99,18 +106,18 @@ public class VendaScreen {
 
         Long idVenda = vendaDAO.insert(venda);
 
-        for (Produto produto : produtosListCesta) {
-            listItem.add(ItemVenda.builder()
-                    .produtoCodigo(produto.getCodigo())
-                    .vendaCodigo(idVenda)
-                    .quantidade(produto.getQuantidade())
-                    .valor(produto.getValor())
-                    .build());
+        for (ItemVenda item : listItem) {
+            item.setVendaCodigo(idVenda); // Atualiza o ID da venda em cada item
         }
 
         ItemVendaDAO itemVendaDAO = new ItemVendaDAO();
         itemVendaDAO.insert(listItem);
 
+        // Limpa a cesta após finalizar a venda
+        produtosListCesta.clear();
+        cestaVisualizacao.clear();
+        listItem.clear();
+        valorTotal = 0.0;
     }
 
     @FXML
@@ -123,25 +130,23 @@ public class VendaScreen {
 
         produtosListCesta.removeIf(produto -> itemSelecionado.contains(produto.getDescricao()));
         cestaVisualizacao.remove(itemSelecionado);
-    }
 
-    private void adicionaProdutoEncontrado(String nomeProduto) {
-        if (produtosList != null && !produtosList.isEmpty()) {
-            produtosEncontrados.addAll(produtosList);
-        } else {
-            System.out.println("Nenhum produto encontrado com o nome: " + nomeProduto);
+        // Atualiza o valor total após remoção
+        valorTotal = 0.0;
+        for (ItemVenda item : listItem) {
+            valorTotal += item.getQuantidade() * item.getValor();
         }
     }
-
 
     @FXML
     private void initialize() {
         produtosEncontrados = FXCollections.observableArrayList();
         cestaVisualizacao = FXCollections.observableArrayList();
-        produtosListCesta = FXCollections.observableArrayList();
+        produtosListCesta = new ArrayList<>();
         list_prod.setItems(produtosEncontrados);
         cesta.setItems(cestaVisualizacao);
         produtoService = new ProdutoService();
+        quantidade_produto.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1));
         list_prod.setCellFactory(new Callback<ListView<Produto>, ListCell<Produto>>() {
             @Override
             public ListCell<Produto> call(ListView<Produto> listView) {
