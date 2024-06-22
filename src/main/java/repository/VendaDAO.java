@@ -4,7 +4,6 @@ import DB_Conection.ConnectionFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import domain.Funcionario;
 import domain.ItemVenda;
 import domain.Venda;
 
@@ -14,61 +13,54 @@ import java.util.List;
 
 public class VendaDAO {
 
-    public Long insert(Venda venda) {
-        Long idVenda = null;
-        String sqlInsertVenda = "INSERT INTO tb_vendas (ven_horario, ven_valor_total, tb_funcionario_fun_codigo) VALUES (?, ?, ?) RETURNING ven_codigo";
+    public void inserirVendaComItens(Venda venda, List<ItemVenda> itens) {
+        String sqlAjustarSequencia = "SELECT setval(pg_get_serial_sequence('tb_vendas', 'ven_codigo'), COALESCE(MAX(ven_codigo) + 1, 1), false) FROM tb_vendas";
+        String sqlInserirVendaComItens = "SELECT inserir_venda_com_itens(?, ?, ?, ?)";
+        Connection conn = null;
 
-        try (Connection conn = ConnectionFactory.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sqlInsertVenda)) {
+        try {
+            conn = ConnectionFactory.getConnection();
+            conn.setAutoCommit(false);
 
-            stmt.setDate(1, Date.valueOf(venda.getHorario()));
-            stmt.setDouble(2, venda.getValorTotal());
-            stmt.setLong(3, venda.getFuncionarioCodigo());
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    idVenda = rs.getLong("ven_codigo");
-                    venda.setCodigo(idVenda);
-                    return idVenda;
-                } else {
-                    throw new SQLException("Falha ao inserir a venda, nenhum ID obtido.");
-                }
+            // Ajustar a sequência
+            try (Statement stmtAjustar = conn.createStatement()) {
+                stmtAjustar.executeQuery(sqlAjustarSequencia);
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return idVenda;
-    }
+            try (PreparedStatement stmt = conn.prepareStatement(sqlInserirVendaComItens)) {
+                stmt.setTimestamp(1, Timestamp.valueOf(venda.getHorario().atStartOfDay()));
+                stmt.setBigDecimal(2, BigDecimal.valueOf(venda.getValorTotal()));
+                stmt.setLong(3, venda.getFuncionarioCodigo());
 
-    public void inserirVendaComItens(Venda venda, List<ItemVenda> itens) {
-        String sql = "SELECT inserir_venda_com_itens(?, ?, ?, ?)";
+                ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+                String jsonItens = objectMapper.writeValueAsString(itens);
+                stmt.setObject(4, jsonItens, java.sql.Types.OTHER);
 
-        try (Connection conn = ConnectionFactory.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            // Preparar os parâmetros
-            stmt.setTimestamp(1, Timestamp.valueOf(venda.getHorario().atStartOfDay()));
-            stmt.setBigDecimal(2, BigDecimal.valueOf(venda.getValorTotal()));
-            stmt.setLong(3, venda.getFuncionarioCodigo());
-
-            // Converter itens para JSON
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-            String jsonItens = objectMapper.writeValueAsString(itens);
-            stmt.setObject(4, jsonItens, java.sql.Types.OTHER);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next() && rs.getLong(1) != 0) {
-                    System.out.println("Venda e itens inseridos com sucesso.");
-                } else {
-                    System.out.println("Falha ao inserir venda e itens.");
+                // Executar a função SQL
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        Long idVenda = rs.getLong(1);
+                        if (idVenda != null) {
+                            System.out.println("Venda e itens inseridos com sucesso. ID da Venda: " + idVenda);
+                            conn.commit();  // Commitar a transação
+                        } else {
+                            System.out.println("Falha ao inserir venda e itens.");
+                            conn.rollback();  // Rollback em caso de falha
+                        }
+                    }
                 }
             }
 
         } catch (SQLException | JsonProcessingException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
             e.printStackTrace();
         }
     }
-
 }
