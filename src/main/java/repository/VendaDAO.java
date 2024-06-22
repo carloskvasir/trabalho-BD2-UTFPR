@@ -48,15 +48,15 @@ public class VendaDAO {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             // Preparar os parâmetros
-            stmt.setTimestamp(1, Timestamp.valueOf(venda.getHorario().atStartOfDay())); // Converte LocalDate para Timestamp
-            stmt.setBigDecimal(2, BigDecimal.valueOf(venda.getValorTotal())); // Use BigDecimal para precisão
+            stmt.setTimestamp(1, Timestamp.valueOf(venda.getHorario().atStartOfDay()));
+            stmt.setBigDecimal(2, BigDecimal.valueOf(venda.getValorTotal()));
             stmt.setLong(3, venda.getFuncionarioCodigo());
 
             // Converter itens para JSON
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
             String jsonItens = objectMapper.writeValueAsString(itens);
-            stmt.setObject(4, jsonItens, java.sql.Types.OTHER); // Use java.sql.Types.OTHER para JSONB
+            stmt.setObject(4, jsonItens, java.sql.Types.OTHER);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next() && rs.getLong(1) != 0) {
