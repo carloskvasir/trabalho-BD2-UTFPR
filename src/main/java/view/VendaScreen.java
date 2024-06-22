@@ -49,13 +49,11 @@ public class VendaScreen {
 
     @FXML
     private void initialize() {
-        // Inicializa a lista de produtos encontrados e a lista de itens da venda
         produtosEncontrados = FXCollections.observableArrayList();
         itensVenda = FXCollections.observableArrayList();
         list_prod.setItems(produtosEncontrados);
         cesta.setItems(itensVenda);
 
-        // Instanciar DAO
         produtoDAO = new ProdutoDAO();
         vendaDAO = new VendaDAO();
     }
@@ -94,7 +92,7 @@ public class VendaScreen {
                 .orElse(null);
 
         if (produto != null) {
-            int quantidade = 1; // Suponha que você está adicionando 1 unidade do produto; pode ser ajustado conforme necessário
+            int quantidade = 1; // LOGICA DE QUANTIDADE
             double valor = produto.getValor();
 
             ItemVenda item = new ItemVenda(0, 0, produto.getCodigo(), quantidade, valor);
@@ -109,7 +107,6 @@ public class VendaScreen {
     private void onFinalizarVendaClicked(MouseEvent event) {
         List<ItemVenda> itens = new ArrayList<>();
         for (String itemDesc : itensVenda) {
-            // Extrair informações do item a partir da descrição
             String[] parts = itemDesc.split(" - ");
             String descricao = parts[0];
             int quantidade = Integer.parseInt(parts[1].split(": ")[1]);
@@ -126,12 +123,11 @@ public class VendaScreen {
         }
 
         double total = calcularTotal(itens);
-        long funcionarioCodigo = obterFuncionarioCodigo(); // Obter o código do funcionário responsável
+        long funcionarioCodigo = obterFuncionarioCodigo();
         Venda venda = new Venda(0, LocalDateTime.now(), total, funcionarioCodigo, itens);
 
         try {
             vendaDAO.createVenda(venda);
-            // Atualizar a interface
             itensVenda.clear();
             produtosEncontrados.clear();
             list_prod.refresh();
