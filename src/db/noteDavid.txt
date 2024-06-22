@@ -1,0 +1,4 @@
+
+SELECT pg_get_serial_sequence('tb_vendas', 'ven_codigo');
+
+SELECT setval(pg_get_serial_sequence('tb_vendas', 'ven_codigo'), COALESCE(MAX(ven_codigo + 1), 1), false) FROM tb_vendas;
