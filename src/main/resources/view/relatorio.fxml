@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.gluonhq.charm.glisten.control.TextField?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -9,10 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="664.0" prefWidth="758.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trabalho_banco_2.trabalhobd2.Relatorio">
    <children>
-      <ScrollPane fx:id="resultadoVenda1" layoutX="-1.0" layoutY="241.0" prefHeight="301.0" prefWidth="758.0">
+      <ScrollPane fx:id="resultadorelatorio" layoutX="-1.0" layoutY="241.0" prefHeight="301.0" prefWidth="758.0">
          <content>
             <ListView prefHeight="303.0" prefWidth="325.0" />
          </content>
@@ -20,16 +20,28 @@
       <Button layoutX="46.0" layoutY="580.0" mnemonicParsing="false" text="Voltar" />
       <Button layoutX="422.0" layoutY="580.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Limpar" />
       <Button layoutX="607.0" layoutY="580.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Gerar" />
-      <ChoiceBox layoutX="59.0" layoutY="100.0" prefWidth="150.0" />
-      <Label layoutX="59.0" layoutY="44.0" prefHeight="35.0" prefWidth="150.0" text="Relatórios">
+      <ChoiceBox fx:id="produto" layoutX="84.0" layoutY="79.0" prefWidth="150.0" />
+      <Label layoutX="9.0" layoutY="74.0" prefHeight="35.0" prefWidth="150.0" text="Produto">
          <font>
-            <Font size="24.0" />
+            <Font size="14.0" />
          </font>
       </Label>
-      <DatePicker layoutX="422.0" layoutY="101.0" />
-      <Label layoutX="445.0" layoutY="44.0" prefHeight="35.0" prefWidth="150.0" text="Data">
+      <DatePicker fx:id="data" layoutX="84.0" layoutY="121.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="9.0" layoutY="116.0" prefHeight="35.0" prefWidth="150.0" text="Data">
          <font>
-            <Font size="24.0" />
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="relatorio" layoutX="84.0" layoutY="160.0" prefWidth="150.0" />
+      <Label layoutX="9.0" layoutY="155.0" prefHeight="35.0" prefWidth="150.0" text="Relatorio">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="produto_id" layoutX="88.0" layoutY="198.0" />
+      <Label layoutX="9.0" layoutY="193.0" prefHeight="35.0" prefWidth="150.0" text="ID">
+         <font>
+            <Font size="14.0" />
          </font>
       </Label>
    </children>
