@@ -5,6 +5,6 @@
         requires com.dlsc.formsfx;
         requires java.sql;
 
-        opens trabalho_banco_2.trabalhobd2 to javafx.fxml;
-        exports trabalho_banco_2.trabalhobd2;
+        opens view to javafx.fxml;
+        exports view;
     }

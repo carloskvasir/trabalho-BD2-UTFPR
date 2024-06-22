@@ -8,23 +8,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="663.0" prefWidth="757.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="663.0" prefWidth="757.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.VendaScreen">
    <children>
-      <TextField fx:id="pesquisaVenda" layoutX="43.0" layoutY="33.0" />
-      <Button fx:id="buscarVenda" layoutX="213.0" layoutY="31.0" mnemonicParsing="false" text="buscar" />
+      <TextField fx:id="input_prod_name" layoutX="43.0" layoutY="33.0" />
+      <Button fx:id="buscar_prod" layoutX="213.0" layoutY="31.0" mnemonicParsing="false" text="buscar" onMouseClicked="#onBuscarProdutoClicked"/>
       <ScrollPane fx:id="resultadoVenda" layoutY="97.0" prefHeight="303.0" prefWidth="682.0">
          <content>
-            <ListView prefHeight="303.0" prefWidth="325.0" />
+            <ListView fx:id="list_prod" prefHeight="303.0" prefWidth="325.0" />
          </content>
       </ScrollPane>
-      <Button fx:id="buscarVenda1" layoutX="462.0" layoutY="24.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="152.0" text="Adicionar Produto" />
+      <Button fx:id="add_prod" layoutX="462.0" layoutY="24.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="152.0" text="Adicionar Produto" onMouseClicked="#onAdicionarProdutoClicked"/>
       <ScrollPane fx:id="resultadoVenda1" layoutY="459.0" prefHeight="182.0" prefWidth="463.0">
          <content>
-            <ListView prefHeight="303.0" prefWidth="325.0" />
+            <ListView fx:id="cesta" prefHeight="303.0" prefWidth="325.0" />
          </content>
       </ScrollPane>
-      <Button fx:id="buscarVenda11" layoutX="499.0" layoutY="498.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="152.0" text="Finalizar Venda" />
-      <Label layoutX="43.0" layoutY="418.0" />
+      <Button fx:id="finaliza_venda" layoutX="499.0" layoutY="498.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="152.0" text="Finalizar Venda" onMouseClicked="#onFinalizarVendaClicked"/>
       <Label layoutX="34.0" layoutY="420.0" prefHeight="32.0" prefWidth="75.0" text="Cesta">
          <font>
             <Font size="22.0" />
