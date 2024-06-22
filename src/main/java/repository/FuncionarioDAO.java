@@ -17,7 +17,6 @@ public class FuncionarioDAO {
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            // Corrige o índice dos parâmetros e ajusta o uso do método executeQuery
             stmt.setString(1, "%" + CurrentUser.getInstance().getUsername() + "%");
             stmt.setString(2, "%" + CurrentUser.getInstance().getPassword() + "%");
             ResultSet rs = stmt.executeQuery();

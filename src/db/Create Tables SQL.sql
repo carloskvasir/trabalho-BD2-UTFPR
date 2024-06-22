@@ -34,7 +34,7 @@ CREATE TABLE tb_funcionarios (
 
 CREATE TABLE tb_vendas (
                            ven_codigo BIGSERIAL PRIMARY KEY,
-                           ven_horario TIMESTAMP NOT NULL,
+                           ven_horario DATE NOT NULL,
                            ven_valor_total DECIMAL(7,2) NOT NULL,
                            tb_funcionario_fun_codigo BIGINT NOT NULL,
                            CONSTRAINT fk_funcionarios

@@ -2,7 +2,9 @@
         requires javafx.controls;
         requires javafx.fxml;
 
-        requires com.dlsc.formsfx;
+            opens domain to com.fasterxml.jackson.databind;
+
+            requires com.dlsc.formsfx;
         requires java.sql;
         requires static lombok;
         requires com.fasterxml.jackson.core;

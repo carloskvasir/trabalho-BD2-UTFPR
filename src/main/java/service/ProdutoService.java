@@ -14,6 +14,9 @@ public class ProdutoService {
     }
 
     public List<Produto> findByName(String name) {
-        return produtoDAO.findByName(name);
+        if (name == null || name.isEmpty()) {
+            return getAllProdutos();
+        }
+            return produtoDAO.findByName(name);
     }
 }

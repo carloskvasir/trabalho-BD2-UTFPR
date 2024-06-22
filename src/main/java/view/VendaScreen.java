@@ -10,10 +10,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-import repository.ItemVendaDAO;
-import repository.VendaDAO;
+import service.ItemVendaService;
 import service.ProdutoService;
+import service.VendaService;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,11 +49,6 @@ public class VendaScreen {
     @FXML
     private void onBuscarProdutoClicked(MouseEvent event) {
         String nomeProduto = input_prod_name.getText();
-        if (nomeProduto.isEmpty()) {
-            System.out.println("Nome do produto não pode estar vazio.");
-            return;
-        }
-
         buscarProduto(nomeProduto);
     }
 
@@ -80,8 +77,10 @@ public class VendaScreen {
             return;
         }
 
-        double valorParcial = quantidade * produtoSelecionado.getValor();
-        valorTotal += valorParcial; // Acumula o valor total
+        double valorParcial = BigDecimal.valueOf(produtoSelecionado.getValor())
+                .multiply(BigDecimal.valueOf(quantidade))
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();        valorTotal += valorParcial; // Acumula o valor total
 
         produtosListCesta.add(produtoSelecionado);
         listItem.add(ItemVenda.builder()
@@ -96,7 +95,6 @@ public class VendaScreen {
 
     @FXML
     public void onFinalizarVendaClicked(MouseEvent event){
-        VendaDAO vendaDAO = new VendaDAO();
 
         Venda venda = Venda.builder()
                 .funcionarioCodigo(CurrentUser.getInstance().getId())
@@ -104,20 +102,20 @@ public class VendaScreen {
                 .valorTotal(valorTotal)
                 .build();
 
-        Long idVenda = vendaDAO.insert(venda);
+//        Long idVenda = VendaService.insert(venda);
 
-        for (ItemVenda item : listItem) {
-            item.setVendaCodigo(idVenda); // Atualiza o ID da venda em cada item
-        }
+//        for (ItemVenda item : listItem) {
+//            item.setVendaCodigo(idVenda); // Atualiza o ID da venda em cada item
+//        }
+        VendaService.inserirVendaComItens(venda, listItem);
 
-        ItemVendaDAO itemVendaDAO = new ItemVendaDAO();
-        itemVendaDAO.insert(listItem);
+//        ItemVendaService.insert(listItem);
 
-        // Limpa a cesta após finalizar a venda
         produtosListCesta.clear();
         cestaVisualizacao.clear();
         listItem.clear();
         valorTotal = 0.0;
+
     }
 
     @FXML

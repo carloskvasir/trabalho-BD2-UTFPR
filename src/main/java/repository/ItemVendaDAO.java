@@ -9,7 +9,6 @@ import java.util.List;
 public class ItemVendaDAO {
 
     public void insert(List<ItemVenda> itemVenda) {
-        Long idVenda = null;
         String sqlInsertItem = "INSERT INTO tb_itens (ite_quantidade, ite_valor_parcial, tb_produtos_pro_codigo, tb_venda_ven_codigo) VALUES (?, ?, ?, ?);";
 
         try (Connection conn = ConnectionFactory.getConnection();
