@@ -1,8 +1,11 @@
-package trabalho_banco_2.trabalhobd2;
+package viewClass;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 

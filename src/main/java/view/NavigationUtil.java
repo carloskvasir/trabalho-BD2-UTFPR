@@ -1,4 +1,4 @@
-package trabalho_banco_2.trabalhobd2.Util;
+package viewClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
