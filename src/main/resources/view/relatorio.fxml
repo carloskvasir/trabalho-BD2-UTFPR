@@ -39,7 +39,12 @@
          </font>
       </Label>
       <TextField fx:id="produto_id" layoutX="88.0" layoutY="198.0" />
-      <Label layoutX="9.0" layoutY="193.0" prefHeight="35.0" prefWidth="150.0" text="ID">
+      <Label layoutX="328.0" layoutY="22.0" prefHeight="35.0" prefWidth="87.0" text="Relatórios">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="19.0" layoutY="203.0" prefHeight="35.0" prefWidth="150.0" text="ID">
          <font>
             <Font size="14.0" />
          </font>
