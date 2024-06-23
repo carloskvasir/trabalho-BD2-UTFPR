@@ -1,6 +1,7 @@
 package backup;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -29,17 +30,23 @@ public class InstallPgDump {
     private static void installPgDumpWindows() throws IOException, InterruptedException {
         // URL para download do PostgreSQL no Windows
         String downloadUrl = "https://get.enterprisedb.com/postgresql/postgresql-15.2-1-windows-x64-binaries.zip";
+        String zipFilePath = System.getProperty("java.io.tmpdir") + "postgresql.zip"; // Diretório temporário
+        String destDir = "C:\\Program Files\\PostgreSQL";
 
-        // Baixar e descompactar usando curl e unzip
-        ProcessBuilder pb = new ProcessBuilder(
+        // Comandos PowerShell para download e descompactação
+        String[] commands = {
                 "powershell", "-Command",
-                String.format(
-                        "& {Invoke-WebRequest -Uri \"%s\" -OutFile \"postgresql.zip\"; Expand-Archive -Path \"postgresql.zip\" -DestinationPath \"C:\\Program Files\\PostgreSQL\";}",
-                        downloadUrl
-                )
-        );
+                "& { " +
+                        "Invoke-WebRequest -Uri \"" + downloadUrl + "\" -OutFile \"" + zipFilePath + "\"; " +
+                        "Expand-Archive -Path \"" + zipFilePath + "\" -DestinationPath \"" + destDir + "\" -Force; " +
+                        "}"
+        };
 
+        ProcessBuilder pb = new ProcessBuilder(commands);
         executeCommand(pb);
+
+        // Limpeza do arquivo temporário
+        new File(zipFilePath).delete();
     }
 
     private static void installPgDumpUnix() throws IOException, InterruptedException {
