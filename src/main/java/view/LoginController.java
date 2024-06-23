@@ -5,6 +5,7 @@ import DB_Conection.CurrentUser;
 import domain.Funcionario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -33,26 +34,23 @@ public class LoginController {
 
         ProdutoDAO p = new ProdutoDAO();
         System.out.println(p.getAllProdutos());
-
     }
 
     private void tryLogin(String username, String password, ActionEvent event) {
         try {
-            storeCurrentUser(username, password);
-            Funcionario funcionario = FuncionarioDAO.getFuncionarioByNameAndPassword();
+            Funcionario funcionario = FuncionarioDAO.getFuncionarioByNameAndPassword(username, password);
             if (funcionario != null) {
-                if (!funcionario.getUser().equals(username) && !funcionario.getSenha().equals(password)) {
-                    displayError("Usuario não existe na tabela de funcionarios");
+                if (!funcionario.getUser().equals(username) || !funcionario.getSenha().equals(password)) {
+                    CurrentUser.getInstance().setId(funcionario.getCodigo());
                 }
             }
-            CurrentUser.getInstance().setId(funcionario.getCodigo());
+            storeCurrentUser(username, password);
             ConnectionFactory.getConnection();
             NavigationUtil.navigateToScreen(event, "vendaScreen.fxml");
         } catch (SQLException | IOException e) {
-            displayError("Erro ao conectar no banco", e);
+            displayError("Erro ao conectar no banco.", e);
         }
     }
-
 
     private void storeCurrentUser(String username, String password) {
         CurrentUser currentUser = CurrentUser.getInstance();
@@ -61,11 +59,19 @@ public class LoginController {
     }
 
     private void displayError(String message, Exception e) {
-        messageLabel.setText(message);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erro");
+        alert.setHeaderText(null);
+        alert.setContentText(message + "\n" + e.getMessage());
+        alert.showAndWait();
         e.printStackTrace();
     }
 
     private void displayError(String message) {
-        messageLabel.setText(message);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erro");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

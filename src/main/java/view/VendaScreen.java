@@ -103,7 +103,6 @@ public class VendaScreen {
                 .valorTotal(valorTotal)
                 .build();
 
-
         try {
             VendaService.inserirVendaComItens(venda, listItem);
             produtosListCesta.clear();
@@ -127,7 +126,6 @@ public class VendaScreen {
         produtosListCesta.removeIf(produto -> itemSelecionado.contains(produto.getDescricao()));
         cestaVisualizacao.remove(itemSelecionado);
 
-        // Atualiza o valor total após remoção
         valorTotal = 0.0;
         for (ItemVenda item : listItem) {
             valorTotal += item.getQuantidade() * item.getValor();

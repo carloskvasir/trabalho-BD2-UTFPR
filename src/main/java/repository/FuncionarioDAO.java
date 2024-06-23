@@ -1,7 +1,6 @@
 package repository;
 
 import DB_Conection.ConnectionFactory;
-import DB_Conection.CurrentUser;
 import domain.Funcionario;
 
 import java.sql.Connection;
@@ -11,14 +10,14 @@ import java.sql.SQLException;
 
 public class FuncionarioDAO {
 
-    public static Funcionario getFuncionarioByNameAndPassword() {
+    public static Funcionario getFuncionarioByNameAndPassword(String user, String password) {
         String query = "SELECT * FROM tb_funcionarios WHERE fun_user LIKE ? AND fun_senha LIKE ?";
         Funcionario funcionario = null;
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, "%" + CurrentUser.getInstance().getUsername() + "%");
-            stmt.setString(2, "%" + CurrentUser.getInstance().getPassword() + "%");
+            stmt.setString(1, "%" + user + "%");
+            stmt.setString(2, "%" + password + "%");
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
