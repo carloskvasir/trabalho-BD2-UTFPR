@@ -10,6 +10,7 @@
         requires com.fasterxml.jackson.core;
         requires com.fasterxml.jackson.databind;
         requires org.json;
+        requires org.postgresql.jdbc;
 
         opens view to javafx.fxml;
         exports view;

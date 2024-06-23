@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import domain.ItemVenda;
 import domain.Venda;
 
+import org.postgresql.util.PGobject;
+
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.List;
@@ -14,51 +16,48 @@ import java.util.List;
 public class VendaDAO {
 
     public void inserirVendaComItens(Venda venda, List<ItemVenda> itens) throws SQLException, JsonProcessingException {
-        String sql = "SELECT inserir_venda_com_itens(?, ?, ?, ?)";
+        String sql = "CALL inserir_venda_com_itens_proc(?, ?, ?, ?)";
         Connection conn = null;
 
         try {
-            // Estabelecer a conexão e iniciar a transação
+            // Estabelecer a conexão
             conn = ConnectionFactory.getConnection();
-            conn.setAutoCommit(false);  // Desativar auto-commit
+            conn.setAutoCommit(true);  // Use auto-commit para permitir que PostgreSQL gerencie a transação
 
-            // Inserir venda e itens
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                // Preparar os parâmetros para a função PL/pgSQL
-                stmt.setTimestamp(1, Timestamp.valueOf(venda.getHorario().atStartOfDay()));
+            // Converter a lista de itens para JSON
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+            String jsonItens = objectMapper.writeValueAsString(itens);
+
+            // Criar um objeto PGobject para JSONB
+            PGobject jsonObject = new PGobject();
+            jsonObject.setType("jsonb");
+            jsonObject.setValue(jsonItens);
+
+            // Preparar a chamada da procedure
+            try (CallableStatement stmt = conn.prepareCall(sql)) {
+                stmt.setDate(1, Date.valueOf(venda.getHorario()));
                 stmt.setBigDecimal(2, BigDecimal.valueOf(venda.getValorTotal()));
                 stmt.setLong(3, venda.getFuncionarioCodigo());
+                stmt.setObject(4, jsonObject);
 
-                // Converter a lista de itens para JSON
-                ObjectMapper objectMapper = new ObjectMapper();
-                objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-                String jsonItens = objectMapper.writeValueAsString(itens);
-                stmt.setObject(4, jsonItens, java.sql.Types.OTHER);
-
-                // Executar a função SQL
-                try (ResultSet rs = stmt.executeQuery()) {
-                    if (rs.next()) {
-                        Long idVenda = rs.getLong(1);
-                        if (idVenda != null) {
-                            System.out.println("Venda e itens inseridos com sucesso. ID da Venda: " + idVenda);
-                            conn.commit();  // Commitar a transação
-                        } else {
-                            throw new SQLException("Falha ao inserir venda e itens.");
-                        }
-                    }
-                }
+                // Executar a procedure
+                stmt.execute();
+                System.out.println("Venda e itens inseridos com sucesso.");
             }
-
-        } catch (SQLException | JsonProcessingException e) {
+        } catch (SQLException e) {
+            // Capturar e tratar a exceção
+            System.err.println("Erro ao inserir venda e itens: " + e.getMessage());
+            throw e;
+        } finally {
             if (conn != null) {
                 try {
-                    // Rollback em caso de erro
-                    conn.rollback();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    // Fechar a conexão
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
-            throw e;  // Relançar a exceção
         }
     }
 }

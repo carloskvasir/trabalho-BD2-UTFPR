@@ -1,9 +1,11 @@
-CREATE OR REPLACE FUNCTION inserir_venda_com_itens(
+CREATE OR REPLACE PROCEDURE inserir_venda_com_itens_aux(
     p_horario TIMESTAMP,
     p_valor_total NUMERIC,
     p_funcionario_codigo BIGINT,
     p_itens JSONB
-) RETURNS BIGINT AS $$
+)
+LANGUAGE plpgsql
+AS $$
 DECLARE
     v_id_venda BIGINT;
 BEGIN
@@ -30,12 +32,21 @@ BEGIN
     SET pro_quantidade = pro_quantidade - (item->>'quantidade')::INT
     FROM jsonb_array_elements(p_itens) AS item
     WHERE tb_produtos.pro_codigo = (item->>'produtoCodigo')::BIGINT;
-
-    RETURN v_id_venda;
-
-EXCEPTION
-    WHEN OTHERS THEN
-        -- Rollback a transação no caso de erro
-        RAISE;
 END;
-$$ LANGUAGE plpgsql;
+$$;
+
+
+
+CREATE OR REPLACE PROCEDURE inserir_venda_com_itens_proc(
+    p_horario TIMESTAMP,
+    p_valor_total NUMERIC,
+    p_funcionario_codigo BIGINT,
+    p_itens JSONB
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    -- Chamar a procedure auxiliar
+    CALL inserir_venda_com_itens_aux(p_horario, p_valor_total, p_funcionario_codigo, p_itens);
+END;
+$$;
