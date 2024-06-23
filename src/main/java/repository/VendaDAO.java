@@ -20,11 +20,9 @@ public class VendaDAO {
         Connection conn = null;
 
         try {
-            // Estabelecer a conexão
             conn = ConnectionFactory.getConnection();
             conn.setAutoCommit(true);  // Use auto-commit para permitir que PostgreSQL gerencie a transação
 
-            // Converter a lista de itens para JSON
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
             String jsonItens = objectMapper.writeValueAsString(itens);
@@ -34,19 +32,16 @@ public class VendaDAO {
             jsonObject.setType("jsonb");
             jsonObject.setValue(jsonItens);
 
-            // Preparar a chamada da procedure
             try (CallableStatement stmt = conn.prepareCall(sql)) {
                 stmt.setDate(1, Date.valueOf(venda.getHorario()));
                 stmt.setBigDecimal(2, BigDecimal.valueOf(venda.getValorTotal()));
                 stmt.setLong(3, venda.getFuncionarioCodigo());
                 stmt.setObject(4, jsonObject);
 
-                // Executar a procedure
                 stmt.execute();
                 System.out.println("Venda e itens inseridos com sucesso.");
             }
         } catch (SQLException e) {
-            // Capturar e tratar a exceção
             System.err.println("Erro ao inserir venda e itens: " + e.getMessage());
             throw e;
         } finally {

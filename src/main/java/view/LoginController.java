@@ -46,7 +46,7 @@ public class LoginController {
                     CurrentUser.getInstance().setId(funcionario.getCodigo());
                 }
             }
-            NavigationUtil.navigateToScreen(event, "vendaScreen.fxml");
+            NavigationUtil.navigateToScreen(event, "mainScreen.fxml");
         } catch (SQLException | IOException e) {
             displayError("Erro ao conectar no banco.", e);
         }

@@ -30,11 +30,18 @@ public class AlertaUtil {
         alerta.showAndWait();
     }
 
-    public static void mostrarAlertaConfirmacao(String titulo, String cabecalho, String mensagem) {
-        Alert alerta = new Alert(AlertType.CONFIRMATION);
+    public static void mostrarAlertaConfirmacao(String titulo, String mensagem) {
+        Alert alerta = new Alert(AlertType.NONE);
         alerta.setTitle(titulo);
-        alerta.setHeaderText(cabecalho);
         alerta.setContentText(mensagem);
+        alerta.showAndWait();
+    }
+
+    public static void mostrarAlertaSucesso(String titulo, String mensagem) {
+        Alert alerta = new Alert(AlertType.INFORMATION);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(mensagem);
+        alerta.setContentText(null);
         alerta.showAndWait();
     }
 }

@@ -7,6 +7,7 @@ import domain.Produto;
 import domain.Venda;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -105,6 +106,7 @@ public class VendaScreen {
 
         try {
             VendaService.inserirVendaComItens(venda, listItem);
+            AlertaUtil.mostrarAlertaSucesso("Sucesso", "Venda finalizada com sucesso");
             produtosListCesta.clear();
             cestaVisualizacao.clear();
             listItem.clear();
@@ -157,5 +159,28 @@ public class VendaScreen {
                 };
             }
         });
+    }
+
+    public void onFinalizarVendaClickedError(MouseEvent event) {
+        Venda venda = Venda.builder()
+                .funcionarioCodigo(4567)
+                .horario(LocalDate.now())
+                .valorTotal(valorTotal)
+                .build();
+
+        try {
+            VendaService.inserirVendaComItens(venda, listItem);
+            produtosListCesta.clear();
+            cestaVisualizacao.clear();
+            listItem.clear();
+            valorTotal = 0.0;
+        } catch (SQLException | JsonProcessingException e) {
+            AlertaUtil.mostrarAlertaErro("Erro ao Finalizar Venda", "Ocorreu um erro ao finalizar a venda: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void onGoBack(ActionEvent actionEvent) {
+        NavigationUtil.goBack(actionEvent);
     }
 }

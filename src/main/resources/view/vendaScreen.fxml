@@ -10,35 +10,59 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="663.0" prefWidth="757.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.VendaScreen">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.VendaScreen">
    <children>
-      <TextField fx:id="input_prod_name" layoutX="24.0" layoutY="34.0" />
-      <Button fx:id="buscar_prod" layoutX="190.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#onBuscarProdutoClicked" prefHeight="18.0" prefWidth="67.0" text="Buscar" />
-      <ScrollPane fx:id="resultadoVenda" layoutX="22.0" layoutY="96.0" prefHeight="303.0" prefWidth="716.0">
+      <TextField fx:id="input_prod_name" layoutX="15.0" layoutY="34.0" prefHeight="26.0" prefWidth="169.0" />
+      <Button fx:id="buscar_prod" layoutX="190.0" layoutY="33.0" mnemonicParsing="false" onMouseClicked="#onBuscarProdutoClicked" prefHeight="18.0" prefWidth="67.0" text="Buscar">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <ScrollPane fx:id="resultadoVenda" layoutX="15.0" layoutY="96.0" prefHeight="303.0" prefWidth="774.0">
          <content>
-            <ListView fx:id="list_prod" prefHeight="305.0" prefWidth="693.0" />
+            <ListView fx:id="list_prod" prefHeight="305.0" prefWidth="768.0" />
          </content>
       </ScrollPane>
-      <Button fx:id="add_prod" layoutX="569.0" layoutY="25.0" mnemonicParsing="false" onMouseClicked="#onAdicionarProdutoClicked" prefHeight="45.0" prefWidth="152.0" text="Adicionar Produto" />
-      <ScrollPane fx:id="resultadoVenda1" layoutX="18.0" layoutY="459.0" prefHeight="182.0" prefWidth="344.0">
+      <Button fx:id="add_prod" layoutX="485.0" layoutY="25.0" mnemonicParsing="false" onMouseClicked="#onAdicionarProdutoClicked" prefHeight="45.0" prefWidth="152.0" text="Adicionar Produto">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <ScrollPane fx:id="resultadoVenda1" layoutX="18.0" layoutY="459.0" prefHeight="219.0" prefWidth="344.0">
          <content>
-            <ListView fx:id="cesta" prefHeight="182.0" prefWidth="322.0" />
+            <ListView fx:id="cesta" prefHeight="218.0" prefWidth="349.0" />
          </content>
       </ScrollPane>
-      <Button fx:id="finaliza_venda" layoutX="379.0" layoutY="541.0" mnemonicParsing="false" onMouseClicked="#onFinalizarVendaClicked" prefHeight="45.0" prefWidth="152.0" text="Finalizar Venda" />
+      <Button fx:id="finaliza_venda" layoutX="379.0" layoutY="546.0" mnemonicParsing="false" onMouseClicked="#onFinalizarVendaClicked" prefHeight="45.0" prefWidth="152.0" text="Finalizar Venda">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
       <Label layoutX="18.0" layoutY="427.0" prefHeight="32.0" prefWidth="105.0" text="Itens da cesta">
          <font>
-            <Font size="17.0" />
+            <Font size="15.0" />
          </font>
       </Label>
       <Spinner fx:id="quantidade_produto" layoutX="277.0" layoutY="35.0" />
-      <Text layoutX="277.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantidade:" />
-      <Text layoutX="24.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome:" />
-      <Text layoutX="21.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selecione o produto:">
+      <Text layoutX="277.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantidade:">
          <font>
-            <Font name="Apple Braille" size="17.0" />
+            <Font size="15.0" />
+         </font></Text>
+      <Text layoutX="15.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome:">
+         <font>
+            <Font size="15.0" />
+         </font></Text>
+      <Text layoutX="14.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selecione o produto:">
+         <font>
+            <Font name="Apple Braille" size="15.0" />
          </font>
       </Text>
-      <Button id="remover_produto" fx:id="add_prod1" layoutX="379.0" layoutY="476.0" mnemonicParsing="false" onMouseClicked="#onRemoverProdutoClicked" prefHeight="45.0" prefWidth="152.0" text="Remover Produto" />
+      <Button id="remover_produto" fx:id="add_prod1" layoutX="379.0" layoutY="479.0" mnemonicParsing="false" onMouseClicked="#onRemoverProdutoClicked" prefHeight="45.0" prefWidth="152.0" text="Remover Produto">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button id="finalizarVendaError" fx:id="finaliza_venda_error" layoutX="379.0" layoutY="612.0" mnemonicParsing="false" onMouseClicked="#onFinalizarVendaClickedError" prefHeight="45.0" prefWidth="152.0" text="Finalizar venda - ERRO" textFill="RED" />
+      <Button fx:id="voltarTela" onAction="#onGoBack" layoutX="671.0" layoutY="25.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="105.0" text="Voltar">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
