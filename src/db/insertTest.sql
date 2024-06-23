@@ -69,29 +69,29 @@ INSERT INTO tb_produtos (pro_codigo, pro_descricao, pro_valor, pro_quantidade, p
     (20, 'Geladeira Frost Free', 799.99, 20, 20, 20);
 
 ----
+-- master, caixa, vendedor, gerente, master seria admin,
 
 INSERT INTO tb_funcionarios (fun_codigo, fun_user, fun_nome, fun_cpf, fun_senha, fun_funcao) VALUES
     (1, 'postgres', 'João Silva', '12345678901', 'postgres', 'Master'),
     (2, '1', 'Maria Oliveira', '12345678902', '1', 'Master'),
     (3, 'p.almeida', 'Pedro Almeida', '12345678903', 'senha789', 'Caixa'),
     (4, 'a.souza', 'Ana Souza', '12345678904', 'senha012', 'Vendedor'),
-    (5, 'c.pereira', 'Carlos Pereira', '12345678905', 'senha345', 'Estoquista'),
+    (5, 'c.pereira', 'Carlos Pereira', '12345678905', 'senha345', 'Vendedor'),
     (6, 'b.gomes', 'Beatriz Gomes', '12345678906', 'senha678', 'Vendedor'),
     (7, 'r.santos', 'Rafael Santos', '12345678907', 'senha901', 'Gerente'),
     (8, 'f.lima', 'Fernanda Lima', '12345678908', 'senha234', 'Caixa'),
     (9, 'l.costa', 'Lucas Costa', '12345678909', 'senha567', 'Vendedor'),
     (10, 'j.torres', 'Juliana Torres', '12345678910', 'senha890', 'Vendedor'),
-    (11, 'g.rocha', 'Gabriel Rocha', '12345678911', 'senha111', 'Estoquista'),
+    (11, 'g.rocha', 'Gabriel Rocha', '12345678911', 'senha111', 'Vendedor'),
     (12, 'l.carvalho', 'Letícia Carvalho', '12345678912', 'senha222', 'Vendedor'),
     (13, 'r.martins', 'Rodrigo Martins', '12345678913', 'senha333', 'Caixa'),
     (14, 'l.freitas', 'Larissa Freitas', '12345678914', 'senha444', 'Vendedor'),
     (15, 'v.barros', 'Vinícius Barros', '12345678915', 'senha555', 'Gerente'),
     (16, 'n.ribeiro', 'Natália Ribeiro', '12345678916', 'senha666', 'Vendedor'),
     (17, 't.fernandes', 'Thiago Fernandes', '12345678917', 'senha777', 'Caixa'),
-    (18, 'd.mota', 'Daniela Mota', '12345678918', 'senha888', 'Estoquista'),
+    (18, 'd.mota', 'Daniela Mota', '12345678918', 'senha888', 'Vendedor'),
     (19, 'f.costa', 'Felipe Costa', '12345678919', 'senha999', 'Vendedor'),
     (20, 'i.melo', 'Isabela Melo', '12345678920', 'senha000', 'Gerente');
-
 
 ----
 
