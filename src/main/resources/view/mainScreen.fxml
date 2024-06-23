@@ -8,6 +8,7 @@
       <Button fx:id="venda_navigator" layoutX="131.0" layoutY="221.0" mnemonicParsing="false" onAction="#onNavigateToVenda" prefHeight="79.0" prefWidth="129.0" text="Venda" />
       <Button fx:id="relatorio_navigator" layoutX="336.0" layoutY="221.0" mnemonicParsing="false" onAction="#onNavigateToRelatorio" prefHeight="79.0" prefWidth="129.0" text="Relatório" />
       <Button fx:id="backup" layoutX="529.0" layoutY="221.0" mnemonicParsing="false" onAction="#onBackup" prefHeight="79.0" prefWidth="129.0" text="Backup" />
-      <Button fx:id="rollback" layoutX="143.0" layoutY="372.0" mnemonicParsing="false" onMouseClicked="#onRollback" prefHeight="57.0" prefWidth="105.0" text="Rollback 3.a" />
+      <Button fx:id="rollback" layoutX="131.0" layoutY="350.0" mnemonicParsing="false" onAction="#onRollback" prefHeight="79.0" prefWidth="129.0" text="Rollback 3.a" />
+      <Button fx:id="restaurar_backup" layoutX="529.0" layoutY="350.0" mnemonicParsing="false" onAction="#onRestaurar" prefHeight="79.0" prefWidth="129.0" text="Restaurar backup" />
    </children>
 </AnchorPane>

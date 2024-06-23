@@ -17,6 +17,6 @@ public class ProdutoService {
         if (name == null || name.isEmpty()) {
             return getAllProdutos();
         }
-            return produtoDAO.findByName(name);
+        return produtoDAO.findByName(name);
     }
 }

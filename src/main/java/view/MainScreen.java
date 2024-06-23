@@ -1,13 +1,16 @@
 package view;
 
 import backup.DatabaseBackup;
+import backup.DatabaseRestore;
 import backup.InstallPgDump;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import service.Funcao3a;
+import service.FuncionarioService;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,6 +57,28 @@ public class MainScreen {
             }
         } else {
             System.out.println("Nenhum diretório selecionado");
+        }
+    }
+
+    @FXML
+    private void onRestaurar() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Selecionar Arquivo de Backup");
+
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivos de Backup", "*.backup"));
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            System.out.println("Arquivo selecionado: " + selectedFile.getAbsolutePath());
+            try {
+                DatabaseRestore.restoreDatabase(selectedFile.getAbsolutePath());
+                FuncionarioService.setFuncionario();
+                showAlert(Alert.AlertType.INFORMATION, "Sucesso", "Restauração realizada com sucesso.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Erro", "Erro ao restaurar o backup: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Nenhum arquivo selecionado");
         }
     }
 

@@ -2,15 +2,13 @@ package view;
 
 import DB_Conection.ConnectionFactory;
 import DB_Conection.CurrentUser;
-import domain.Funcionario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import repository.FuncionarioDAO;
-import repository.ProdutoDAO;
+import service.FuncionarioService;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -36,13 +34,8 @@ public class LoginController {
     private void tryLogin(String username, String password, ActionEvent event) {
         try {
             storeCurrentUser(username, password);
+            FuncionarioService.setFuncionario();
             ConnectionFactory.getConnection();
-            Funcionario funcionario = FuncionarioDAO.getFuncionarioByNameAndPassword(username, password);
-            if (funcionario != null) {
-                if (funcionario.getUser().equals(username) || funcionario.getSenha().equals(password)) {
-                    CurrentUser.getInstance().setId(funcionario.getCodigo());
-                }
-            }
             NavigationUtil.navigateToScreen(event, "mainScreen.fxml");
         } catch (SQLException | IOException e) {
             displayError("Erro ao conectar no banco.", e);
