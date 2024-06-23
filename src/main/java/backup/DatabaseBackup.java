@@ -9,44 +9,41 @@ import java.time.format.DateTimeFormatter;
 
 public class DatabaseBackup {
 
-    private static final String DB_NAME = "trabalho_banco"; // Nome do banco de dados
-    private static final String DB_USER = "postgres"; // Usuário do banco de dados
-    private static final String DB_PASSWORD = "postgres"; // Senha do banco de dados
-    private static final String DB_HOST = "localhost"; // Host do banco de dados
-    private static final String DB_PORT = "5432"; // Porta do banco de dados
-    private static final String BACKUP_DIR = "/Users/davidpereira/Desktop/github/backup"; // Diretório de backup
+    private static final String DB_NAME = "trabalho_banco";
+    private static final String DB_USER = "postgres";
+    private static final String DB_PASSWORD = "postgres";
+    private static final String DB_HOST = "localhost";
+    private static final String DB_PORT = "5432";
 
-    public static void main(String[] args) {
-        try {
-            backupDatabase();
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+    private static String detectPgDumpPath() {
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("win")) {
+            return "C:\\Program Files\\PostgreSQL\\16\\bin\\pg_dump.exe";
+        } else if (os.contains("mac")) {
+            return "/usr/local/opt/postgresql@16/bin/pg_dump";
+        } else if (os.contains("nix") || os.contains("nux")) {
+            return "/usr/lib/postgresql/16/bin/pg_dump";
         }
+        return null;
     }
 
-    public static void backupDatabase() throws IOException, InterruptedException {
-        // Verifica e cria o diretório de backup se não existir
-        File backupDir = new File(BACKUP_DIR);
-        if (!backupDir.exists()) {
-            if (!backupDir.mkdirs()) {
-                System.err.println("Erro: Não foi possível criar o diretório de backup: " + backupDir.getAbsolutePath());
-                return;
+    public static void backupDatabase(String backupDir) throws IOException, InterruptedException {
+        File backupDirectory = new File(backupDir);
+        if (!backupDirectory.exists()) {
+            if (!backupDirectory.mkdirs()) {
+                throw new IOException("Não foi possível criar o diretório de backup: " + backupDirectory.getAbsolutePath());
             }
         }
 
-        // Gera o nome do arquivo de backup com base na data e hora atuais
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
         String backupFileName = DB_NAME + "_" + timestamp + ".backup";
-        String backupFilePath = BACKUP_DIR + File.separator + backupFileName;
+        String backupFilePath = backupDirectory.getAbsolutePath() + File.separator + backupFileName;
 
-        // Detecta o sistema operacional e define o caminho para pg_dump
         String pgDumpPath = detectPgDumpPath();
         if (pgDumpPath == null) {
-            System.err.println("Erro: Sistema operacional não suportado para a instalação automática.");
-            return;
+            throw new IOException("Sistema operacional não suportado ou caminho de pg_dump não encontrado.");
         }
 
-        // Executa o comando de backup
         ProcessBuilder pb = new ProcessBuilder(
                 pgDumpPath,
                 "-h", DB_HOST,
@@ -64,18 +61,6 @@ public class DatabaseBackup {
         executeCommand(pb);
     }
 
-    private static String detectPgDumpPath() {
-        String os = System.getProperty("os.name").toLowerCase();
-        if (os.contains("win")) {
-            return "C:\\Program Files\\PostgreSQL\\16\\bin\\pg_dump.exe"; // Substitua pelo caminho correto se necessário
-        } else if (os.contains("mac")) {
-            return "/usr/local/opt/postgresql@16/bin/pg_dump";
-        } else if (os.contains("nix") || os.contains("nux")) {
-            return "/usr/lib/postgresql/16/bin/pg_dump";
-        }
-        return null;
-    }
-
     private static void executeCommand(ProcessBuilder pb) throws IOException, InterruptedException {
         pb.redirectErrorStream(true);
         Process process = pb.start();
@@ -88,7 +73,7 @@ public class DatabaseBackup {
         if (exitCode == 0) {
             System.out.println("Backup realizado com sucesso.");
         } else {
-            System.err.println("Falha no backup. Código de saída: " + exitCode);
+            throw new IOException("Falha no backup. Código de saída: " + exitCode);
         }
     }
 }

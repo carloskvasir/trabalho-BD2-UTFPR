@@ -7,15 +7,7 @@ import java.io.InputStreamReader;
 
 public class InstallPgDump {
 
-    private static final String PG_VERSION = "16"; // Versão do PostgreSQL a ser instalada
-
-    public static void main(String[] args) {
-        try {
-            installPgDump();
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+    private static final String PG_VERSION = "16";
 
     public static void installPgDump() throws IOException, InterruptedException {
         String os = System.getProperty("os.name").toLowerCase();

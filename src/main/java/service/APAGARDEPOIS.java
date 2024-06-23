@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 
-public class SimplePostgresBackup {
+public class APAGARDEPOIS {
 
     public static void main(String[] args) {
         String url = "jdbc:postgresql://localhost:5432/trabalho_banco";
