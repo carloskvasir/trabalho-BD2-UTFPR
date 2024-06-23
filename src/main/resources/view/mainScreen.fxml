@@ -5,8 +5,9 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainScreen">
    <children>
-      <Button fx:id="venda_navigator" onAction="#onNavigateToVenda" layoutX="131.0" layoutY="221.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="129.0" text="Venda" />
-      <Button fx:id="relatorio_navigator" onAction="#onNavigateToRelatorio" layoutX="336.0" layoutY="221.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="129.0" text="Relatório" />
-      <Button fx:id="backup" onAction="#onBackup" layoutX="529.0" layoutY="221.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="129.0" text="Backup" />
+      <Button fx:id="venda_navigator" layoutX="131.0" layoutY="221.0" mnemonicParsing="false" onAction="#onNavigateToVenda" prefHeight="79.0" prefWidth="129.0" text="Venda" />
+      <Button fx:id="relatorio_navigator" layoutX="336.0" layoutY="221.0" mnemonicParsing="false" onAction="#onNavigateToRelatorio" prefHeight="79.0" prefWidth="129.0" text="Relatório" />
+      <Button fx:id="backup" layoutX="529.0" layoutY="221.0" mnemonicParsing="false" onAction="#onBackup" prefHeight="79.0" prefWidth="129.0" text="Backup" />
+      <Button fx:id="rollback" layoutX="143.0" layoutY="372.0" mnemonicParsing="false" onMouseClicked="#onRollback" prefHeight="57.0" prefWidth="105.0" text="Rollback 3.a" />
    </children>
 </AnchorPane>

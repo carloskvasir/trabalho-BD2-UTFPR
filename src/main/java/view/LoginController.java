@@ -31,9 +31,6 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
         tryLogin(username, password, event);
-
-        ProdutoDAO p = new ProdutoDAO();
-        System.out.println(p.getAllProdutos());
     }
 
     private void tryLogin(String username, String password, ActionEvent event) {
