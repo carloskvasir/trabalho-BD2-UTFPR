@@ -14,24 +14,22 @@ import java.util.List;
 public class VendaDAO {
 
     public void inserirVendaComItens(Venda venda, List<ItemVenda> itens) {
-        String sqlAjustarSequencia = "SELECT setval(pg_get_serial_sequence('tb_vendas', 'ven_codigo'), COALESCE(MAX(ven_codigo) + 1, 1), false) FROM tb_vendas";
-        String sqlInserirVendaComItens = "SELECT inserir_venda_com_itens(?, ?, ?, ?)";
+        String sql = "SELECT inserir_venda_com_itens(?, ?, ?, ?)";
         Connection conn = null;
 
         try {
+            // Estabelecer a conexão e iniciar a transação
             conn = ConnectionFactory.getConnection();
-            conn.setAutoCommit(false);
+            conn.setAutoCommit(false);  // Desativar auto-commit
 
-            // Ajustar a sequência
-            try (Statement stmtAjustar = conn.createStatement()) {
-                stmtAjustar.executeQuery(sqlAjustarSequencia);
-            }
-
-            try (PreparedStatement stmt = conn.prepareStatement(sqlInserirVendaComItens)) {
+            // Inserir venda e itens
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                // Preparar os parâmetros para a função PL/pgSQL
                 stmt.setTimestamp(1, Timestamp.valueOf(venda.getHorario().atStartOfDay()));
                 stmt.setBigDecimal(2, BigDecimal.valueOf(venda.getValorTotal()));
                 stmt.setLong(3, venda.getFuncionarioCodigo());
 
+                // Converter a lista de itens para JSON
                 ObjectMapper objectMapper = new ObjectMapper();
                 objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
                 String jsonItens = objectMapper.writeValueAsString(itens);
@@ -55,6 +53,7 @@ public class VendaDAO {
         } catch (SQLException | JsonProcessingException e) {
             if (conn != null) {
                 try {
+                    // Rollback em caso de erro
                     conn.rollback();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
