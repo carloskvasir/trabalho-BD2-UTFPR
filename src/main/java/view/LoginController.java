@@ -66,12 +66,4 @@ public class LoginController {
         alert.showAndWait();
         e.printStackTrace();
     }
-
-    private void displayError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erro");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }
