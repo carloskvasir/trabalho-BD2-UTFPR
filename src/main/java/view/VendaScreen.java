@@ -1,6 +1,7 @@
 package view;
 
 import DB_Conection.CurrentUser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import domain.ItemVenda;
 import domain.Produto;
 import domain.Venda;
@@ -15,6 +16,7 @@ import service.VendaService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,13 +103,17 @@ public class VendaScreen {
                 .valorTotal(valorTotal)
                 .build();
 
-        VendaService.inserirVendaComItens(venda, listItem);
 
-        produtosListCesta.clear();
-        cestaVisualizacao.clear();
-        listItem.clear();
-        valorTotal = 0.0;
-
+        try {
+            VendaService.inserirVendaComItens(venda, listItem);
+            produtosListCesta.clear();
+            cestaVisualizacao.clear();
+            listItem.clear();
+            valorTotal = 0.0;
+        } catch (SQLException | JsonProcessingException e) {
+            AlertaUtil.mostrarAlertaErro("Erro ao Finalizar Venda", "Ocorreu um erro ao finalizar a venda: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML

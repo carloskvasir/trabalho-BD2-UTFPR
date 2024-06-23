@@ -13,7 +13,7 @@ import java.util.List;
 
 public class VendaDAO {
 
-    public void inserirVendaComItens(Venda venda, List<ItemVenda> itens) {
+    public void inserirVendaComItens(Venda venda, List<ItemVenda> itens) throws SQLException, JsonProcessingException {
         String sql = "SELECT inserir_venda_com_itens(?, ?, ?, ?)";
         Connection conn = null;
 
@@ -43,8 +43,7 @@ public class VendaDAO {
                             System.out.println("Venda e itens inseridos com sucesso. ID da Venda: " + idVenda);
                             conn.commit();  // Commitar a transação
                         } else {
-                            System.out.println("Falha ao inserir venda e itens.");
-                            conn.rollback();  // Rollback em caso de falha
+                            throw new SQLException("Falha ao inserir venda e itens.");
                         }
                     }
                 }
@@ -59,7 +58,7 @@ public class VendaDAO {
                     ex.printStackTrace();
                 }
             }
-            e.printStackTrace();
+            throw e;  // Relançar a exceção
         }
     }
 }
