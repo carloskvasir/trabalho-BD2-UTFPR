@@ -38,14 +38,14 @@ public class LoginController {
 
     private void tryLogin(String username, String password, ActionEvent event) {
         try {
+            storeCurrentUser(username, password);
+            ConnectionFactory.getConnection();
             Funcionario funcionario = FuncionarioDAO.getFuncionarioByNameAndPassword(username, password);
             if (funcionario != null) {
-                if (!funcionario.getUser().equals(username) || !funcionario.getSenha().equals(password)) {
+                if (funcionario.getUser().equals(username) || funcionario.getSenha().equals(password)) {
                     CurrentUser.getInstance().setId(funcionario.getCodigo());
                 }
             }
-            storeCurrentUser(username, password);
-            ConnectionFactory.getConnection();
             NavigationUtil.navigateToScreen(event, "vendaScreen.fxml");
         } catch (SQLException | IOException e) {
             displayError("Erro ao conectar no banco.", e);
