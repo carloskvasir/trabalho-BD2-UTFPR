@@ -1,4 +1,4 @@
-package repository;
+package dao;
 
 import DB_Conection.ConnectionFactory;
 import domain.Funcionario;

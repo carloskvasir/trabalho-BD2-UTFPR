@@ -35,7 +35,7 @@ public class VendaScreen {
     @FXML
     private Button add_prod;
     @FXML
-    private ScrollPane resultadoVenda1;
+    private ScrollPane cestaList;
     @FXML
     private ListView<String> cesta;
     @FXML

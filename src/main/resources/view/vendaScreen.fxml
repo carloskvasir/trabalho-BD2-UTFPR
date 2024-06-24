@@ -26,18 +26,18 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <ScrollPane fx:id="resultadoVenda1" layoutX="18.0" layoutY="459.0" prefHeight="219.0" prefWidth="344.0">
+      <ScrollPane fx:id="cestaList" layoutX="18.0" layoutY="459.0" prefHeight="219.0" prefWidth="559.0">
          <content>
-            <ListView fx:id="cesta" prefHeight="218.0" prefWidth="349.0" />
+            <ListView fx:id="cesta" prefHeight="218.0" prefWidth="587.0" />
          </content>
       </ScrollPane>
-      <Button fx:id="finaliza_venda" layoutX="379.0" layoutY="546.0" mnemonicParsing="false" onMouseClicked="#onFinalizarVendaClicked" prefHeight="45.0" prefWidth="152.0" text="Finalizar Venda">
+      <Button fx:id="finaliza_venda" layoutX="618.0" layoutY="547.0" mnemonicParsing="false" onMouseClicked="#onFinalizarVendaClicked" prefHeight="45.0" prefWidth="152.0" text="Finalizar Venda">
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Label layoutX="18.0" layoutY="427.0" prefHeight="32.0" prefWidth="105.0" text="Itens da cesta">
+      <Label layoutX="18.0" layoutY="427.0" prefHeight="32.0" prefWidth="105.0" text="Itens da cesta:">
          <font>
-            <Font size="15.0" />
+            <Font name="Apple Braille" size="15.0" />
          </font>
       </Label>
       <Spinner fx:id="quantidade_produto" layoutX="277.0" layoutY="35.0" />
@@ -54,12 +54,12 @@
             <Font name="Apple Braille" size="15.0" />
          </font>
       </Text>
-      <Button id="remover_produto" fx:id="add_prod1" layoutX="379.0" layoutY="479.0" mnemonicParsing="false" onMouseClicked="#onRemoverProdutoClicked" prefHeight="45.0" prefWidth="152.0" text="Remover Produto">
+      <Button id="remover_produto" fx:id="add_prod1" layoutX="618.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#onRemoverProdutoClicked" prefHeight="45.0" prefWidth="152.0" text="Remover Produto">
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Button id="finalizarVendaError" fx:id="finaliza_venda_error" layoutX="379.0" layoutY="612.0" mnemonicParsing="false" onMouseClicked="#onFinalizarVendaClickedError" prefHeight="45.0" prefWidth="152.0" text="Finalizar venda - ERRO" textFill="RED" />
-      <Button fx:id="voltarTela" onAction="#onGoBack" layoutX="671.0" layoutY="25.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="105.0" text="Voltar">
+      <Button id="finalizarVendaError" fx:id="finaliza_venda_error" layoutX="618.0" layoutY="613.0" mnemonicParsing="false" onMouseClicked="#onFinalizarVendaClickedError" prefHeight="45.0" prefWidth="152.0" text="Finalizar venda - ERRO" textFill="RED" />
+      <Button fx:id="voltarTela" layoutX="671.0" layoutY="25.0" mnemonicParsing="false" onAction="#onGoBack" prefHeight="45.0" prefWidth="105.0" text="Voltar">
          <font>
             <Font size="15.0" />
          </font>

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.TextField?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -10,44 +8,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="664.0" prefWidth="758.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trabalho_banco_2.trabalhobd2.Relatorio">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Relatorio">
    <children>
-      <ScrollPane fx:id="resultadorelatorio" layoutY="242.0" prefHeight="344.0" prefWidth="758.0">
+      <Button fx:id="voltarButton" layoutX="634.0" layoutY="23.0" mnemonicParsing="false" onAction="#onVoltar" prefHeight="60.0" prefWidth="126.0" text="Voltar" />
+      <Button fx:id="gerarButton" layoutX="485.0" layoutY="23.0" mnemonicParsing="false" onAction="#onGerar" prefHeight="60.0" prefWidth="126.0" text="Gerar" />
+      <DatePicker fx:id="data" layoutX="93.0" layoutY="14.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="15.0" layoutY="14.0" prefHeight="26.0" prefWidth="70.0" text="Data início:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="data1" layoutX="93.0" layoutY="57.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="15.0" layoutY="57.0" prefHeight="26.0" prefWidth="70.0" text="Data final:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ScrollPane fx:id="resultadoVenda" layoutX="15.0" layoutY="96.0" prefHeight="489.0" prefWidth="770.0">
          <content>
-            <ListView prefHeight="348.0" prefWidth="744.0" />
+            <ListView fx:id="list_prod" />
          </content>
       </ScrollPane>
-      <Button layoutX="21.0" layoutY="603.0" mnemonicParsing="false" text="Voltar" />
-      <Button layoutX="285.0" layoutY="158.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Limpar" />
-      <Button layoutX="285.0" layoutY="119.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Gerar" />
-      <ChoiceBox fx:id="produto" layoutX="84.0" layoutY="79.0" prefWidth="150.0" />
-      <Label layoutX="9.0" layoutY="74.0" prefHeight="35.0" prefWidth="50.0" text="Produto">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <DatePicker fx:id="data" layoutX="84.0" layoutY="121.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label layoutX="9.0" layoutY="116.0" prefHeight="35.0" prefWidth="37.0" text="Data">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <ChoiceBox fx:id="relatorio" layoutX="84.0" layoutY="160.0" prefWidth="150.0" />
-      <Label layoutX="9.0" layoutY="155.0" prefHeight="35.0" prefWidth="61.0" text="Relatorio">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="produto_id" layoutX="84.0" layoutY="198.0" prefHeight="26.0" prefWidth="150.0" />
-      <Label layoutX="328.0" layoutY="22.0" prefHeight="35.0" prefWidth="87.0" text="Relatórios">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="14.0" layoutY="198.0" prefHeight="26.0" prefWidth="20.0" text="ID">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>

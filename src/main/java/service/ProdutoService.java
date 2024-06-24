@@ -1,7 +1,7 @@
 package service;
 
 import domain.Produto;
-import repository.ProdutoDAO;
+import dao.ProdutoDAO;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package service;
 
 import DB_Conection.CurrentUser;
 import domain.Funcionario;
-import repository.FuncionarioDAO;
+import dao.FuncionarioDAO;
 
 public class FuncionarioService {
 

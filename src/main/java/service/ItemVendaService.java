@@ -1,7 +1,7 @@
 package service;
 
 import domain.ItemVenda;
-import repository.ItemVendaDAO;
+import dao.ItemVendaDAO;
 
 import java.util.List;
 

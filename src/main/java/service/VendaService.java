@@ -3,7 +3,7 @@ package service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import domain.ItemVenda;
 import domain.Venda;
-import repository.VendaDAO;
+import dao.VendaDAO;
 
 import java.sql.SQLException;
 import java.util.List;
