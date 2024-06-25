@@ -14,7 +14,7 @@ public class MainAplication extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
         GridPane root = loader.load();
         Scene scene = new Scene(root, 300, 200);
-        primaryStage.setTitle("Login");
+        primaryStage.setTitle("Trabalho BD2");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
