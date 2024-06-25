@@ -10,7 +10,7 @@ import java.util.List;
 public class RelatorioDAO {
 
 
-    public List<String> getRelatorioVendasPeriodo(LocalDate dataInicio, LocalDate dataFim) {
+    public List<String> getRelatorioVendasPeriodo(LocalDate dataInicio, LocalDate dataFim) throws SQLException {
         List<String> resultado = new ArrayList<>();
         String sql = "SELECT * FROM relatorio_vendas_periodo(?, ?)";
 
@@ -32,12 +32,11 @@ public class RelatorioDAO {
                 }
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         return resultado;
     }
+
 
 }
 

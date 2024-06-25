@@ -5,7 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.event.ActionEvent;
+import service.RelatorioService;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -13,10 +15,10 @@ import java.util.List;
 public class Relatorio {
 
     @FXML
-    private ScrollPane resultadoVenda; // Certifique-se de que coincide com o FXML
+    private ScrollPane resultadoVenda;
 
     @FXML
-    private ListView<String> list_prod; // Certifique-se de que coincide com o FXML
+    private ListView<String> list_prod;
 
     @FXML
     private DatePicker data;
@@ -65,14 +67,15 @@ public class Relatorio {
             return;
         }
 
-        // Limpa a lista antes de adicionar novos itens
         list_prod.getItems().clear();
 
-        // Usa o DAO para obter o relatório
-        List<String> resultado = relatorioDAO.getRelatorioVendasPeriodo(startDate, endDate);
-
-        // Adiciona os resultados ao ListView
-        list_prod.getItems().addAll(resultado);
+        List<String> resultado = null;
+        try {
+            List<String> relatorio = relatorioDAO.getRelatorioVendasPeriodo(startDate, endDate);
+            list_prod.getItems().addAll(relatorio);
+        } catch (SQLException e) {
+            showAlert(AlertType.ERROR, "Erro de Banco de Dados", "Ocorreu um erro ao gerar o relatório: " + e.getMessage());
+        }
     }
 
     private void showAlert(AlertType alertType, String title, String message) {

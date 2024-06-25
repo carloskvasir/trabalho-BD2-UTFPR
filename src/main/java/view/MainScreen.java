@@ -90,7 +90,7 @@ public class MainScreen {
         alert.showAndWait();
     }
 
-    public void onRollback(MouseEvent event) {
+    public void onRollback(ActionEvent event) {
         try {
             Funcao3a.callTentarInserirComRollback(999929876L,"test","122323423","test", "test", "test");
         } catch (SQLException e) {

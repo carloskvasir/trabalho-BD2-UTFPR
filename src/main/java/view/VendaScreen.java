@@ -163,7 +163,7 @@ public class VendaScreen {
 
     public void onFinalizarVendaClickedError(MouseEvent event) {
         Venda venda = Venda.builder()
-                .funcionarioCodigo(4567)
+                .funcionarioCodigo(777777777)
                 .horario(LocalDate.now())
                 .valorTotal(valorTotal)
                 .build();
