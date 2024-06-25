@@ -37,7 +37,7 @@ public class VendaDAO {
                 stmt.setBigDecimal(2, BigDecimal.valueOf(venda.getValorTotal()));
                 stmt.setLong(3, venda.getFuncionarioCodigo());
                 stmt.setObject(4, jsonObject);
-
+                // Executa o SQL
                 stmt.execute();
                 System.out.println("Venda e itens inseridos com sucesso.");
             }
