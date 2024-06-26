@@ -1,5 +1,7 @@
 package backup;
 
+import DB_Conection.CurrentUser;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -7,17 +9,16 @@ import java.io.InputStreamReader;
 
 public class DatabaseRestore {
 
-    private static final String DB_NAME = "trabalho_banco"; // Nome do banco de dados
-    private static final String DB_USER = "postgres"; // Usuário do banco de dados
-    private static final String DB_PASSWORD = "postgres"; // Senha do banco de dados
-    private static final String DB_HOST = "localhost"; // Host do banco de dados
-    private static final String DB_PORT = "5432"; // Porta do banco de dados
+    private static final String DB_NAME = "trabalho_banco";
+    private static final String DB_USER = CurrentUser.getInstance().getUsername();
+    private static final String DB_PASSWORD = CurrentUser.getInstance().getPassword();
+    private static final String DB_HOST = "localhost";
+    private static final String DB_PORT = "5432";
 
-    // Detecta o sistema operacional e retorna o caminho para pg_restore
     private static String detectPgRestorePath() {
         String os = System.getProperty("os.name").toLowerCase();
         if (os.contains("win")) {
-            return "C:\\Program Files\\PostgreSQL\\16\\bin\\pg_restore.exe"; // Substitua pelo caminho correto
+            return "C:\\Program Files\\PostgreSQL\\16\\bin\\pg_restore.exe";
         } else if (os.contains("mac")) {
             return "/usr/local/opt/postgresql@16/bin/pg_restore";
         } else if (os.contains("nix") || os.contains("nux")) {

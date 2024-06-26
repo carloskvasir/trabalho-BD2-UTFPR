@@ -1,5 +1,7 @@
 package backup;
 
+import DB_Conection.CurrentUser;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -10,8 +12,8 @@ import java.time.format.DateTimeFormatter;
 public class DatabaseBackup {
 
     private static final String DB_NAME = "trabalho_banco";
-    private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "postgres";
+    private static final String DB_USER = CurrentUser.getInstance().getUsername();
+    private static final String DB_PASSWORD = CurrentUser.getInstance().getPassword();
     private static final String DB_HOST = "localhost";
     private static final String DB_PORT = "5432";
 
