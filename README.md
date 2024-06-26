@@ -12,22 +12,18 @@ POSTGRES_PASSWORD: postgres
  - maven 3.9.7
  - postgresql 16
 
+## Para rodar o banco pelo docker-compose
 
-## Atividades:
- - [x] Criar HelloWorld
- - [x] Conectar no postgres
- - [ ] Configurar gerenciador de variaveis
- - [ ] Configurar migrations
-
-## Tutoriais
-
-Para rodar o banco pelo dockercompose
+### Para iniciar o banco:
 ```bash
 docker-compose up -d
 ```
 
-Para parar o banco
-```bbash
+Abra a aplicação com o user `postgres` senha `postgres` e
+restaure o backup que esta em [link backup](https://github.com/carloskvasir/trabalho-BD2-UTFPR/blob/main/src/db/trabalho_banco_20240625_231006.backup).  
+Após isso as funcionalidades de venda e relatorio estarao ativas para esse usuario.  
+
+### Para parar o banco
+```bash
 docker-compose down
 ```
-

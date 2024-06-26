@@ -6,20 +6,24 @@ CREATE ROLE vendedor_role;
 -- 2. Criar usuários e atribuir roles
 CREATE USER gerente WITH PASSWORD 'gerente';
 CREATE USER vendedor WITH PASSWORD 'vendedor';
+CREATE USER u1 WITH PASSWORD '1';
+CREATE USER u2 WITH PASSWORD '2';
 
 GRANT admin_role TO postgres;
 GRANT gerente_role TO gerente;
 GRANT vendedor_role TO vendedor;
+GRANT u1 TO vendedor;
+GRANT u2 TO vendedor;
 
 -- Inserção de novos funcionários calculando o próximo valor de fun_codigo
 INSERT INTO tb_funcionarios (fun_codigo, fun_user, fun_nome, fun_cpf, fun_senha, fun_funcao)
 VALUES (
            (SELECT COALESCE(MAX(fun_codigo), 0) + 1 FROM tb_funcionarios),
-           'gerente', 'Gerente', '12345678901', 'gerente', 'Gerente'
+           'u1', 'user_1', '12345678901', 'u1', 'Vendedor'
        ),
        (
            (SELECT COALESCE(MAX(fun_codigo), 0) + 2 FROM tb_funcionarios),
-           'vendedor', 'Vendedor', '12345678902', 'vendedor', 'Vendedor'
+           'u2', 'user_2', '12345678902', 'u2', 'Vendedor'
        );
 
 
